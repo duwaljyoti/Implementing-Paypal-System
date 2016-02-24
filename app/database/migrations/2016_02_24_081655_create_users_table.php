@@ -12,7 +12,7 @@ class CreateUsersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('users', function(Blueprint $table)
+		Schema::create('users', function(Blueprint $table)
 		{
 			//
 				$table->increments('id');
@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration {
 			$table->decimal('num_books_issued');
 			$table->string('Grade');
 			$table->string('Faculty');
+
 		});
 	}
 

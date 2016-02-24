@@ -40,7 +40,6 @@ class MainController extends \BaseController {
 			$AllBooks=DB::table('books')->get();
 			$logged_user=Session::get('username');
 			// DB::table('user')->where('name',=,'Jhon')->get()->toArray();
-			echo $logged_user;
 			$get_all_dates=BooksIssued::where('student_name','=',$logged_user)->get()->toArray();
 			// echo count(*)
 			foreach($get_all_dates as $dates){
@@ -51,8 +50,6 @@ class MainController extends \BaseController {
 				// dd((int)$dates['to_return_date']);
 				echo $dates['to_return_date']."<P>";
 			}
-			dd($get_all_dates);
-			dd($get_all_dates->toArray());
 			$data=array('BookCatList'=>$BooksCategories,'LatestBook'=>$LatestBook,'AllBooks'=>$AllBooks,'logged_user'=>$logged_user);
 			// return View::make('home',[$data]);
 			return View::make('home')->with($data);
