@@ -1,0 +1,62 @@
+
+	body{
+		border:1px solid black;
+		width: 60%;
+		margin:auto;
+		text-align: center;
+		min-height: 934px;
+	}
+	a{
+		text-decoration: none;
+	}
+	#error_messages{
+		color:red;
+	}
+	#books_category,#all_books,#latest_books{
+		width:556px;
+		border:1px solid gray ;
+		margin:auto;
+		padding:2px;
+		min-height: 123px;
+		min-width: 108px;
+		margin-top:23px;	
+	}
+	#all_books{
+	}
+	#buttom_menus{
+		clear:left;
+		margin-top:285px;
+	}
+	#search_box{
+		height: 34px;
+		margin-left:455px;
+	}
+	#ad_books_category,#ad_latest_books,#ad_all_books{
+		border: 1px solid black;
+		width:556px;
+		float:left;
+		min-height: 280px;
+		margin-left: 142px;
+		padding-top:10px;
+		margin-top: 23px;
+	}
+	#ad_all_books{
+		margin-top: 10px;
+		clear:left;
+		border: 1px solid black;
+		min-height: 280px;
+		padding-top:10px;
+
+	}
+	#ad_bottom_menus{
+		padding-top: 10px;
+		clear:left;
+		margin-top:285px;
+	}
+	#reminder{
+		border: 1px solid black;
+		width:556px;
+		background-color: #ff4d4d;
+		margin-left: 120px;
+		padding-top:10px;	
+	}
