@@ -41,7 +41,7 @@ Route::get('/add_new/{field} ', function ($field) {
     }
 });
 Route::get('/single_book/{single_book_id}', function ($single_book_id) {
-    return App::make('MainController')->disp_single_book($single_book_id);
+    return App::make('MainController')->disp_all_books($single_book_id);
 });
 Route::post('/change', 'MainController@change');
 Route::post('/add', 'MainController@add');
