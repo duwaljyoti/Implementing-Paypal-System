@@ -16,7 +16,7 @@
 
 	<div id='reminder'>
 	@if(isset($logged_user))
-		yes
+		Latest Date of Book Submisssion:
 	@else
 		No one
 	@endif
