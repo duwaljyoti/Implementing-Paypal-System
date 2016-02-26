@@ -1,5 +1,5 @@
 <?php
-phpversion();
+// phpversion();
 
 class MainController extends \BaseController
 {
@@ -47,7 +47,8 @@ class MainController extends \BaseController
     }
 
     public function change()
-    {;
+    {
+        ;
         $this->book_categories->change_single_book_detail(Input::get('id'), Input::get('new_cat_name'));
         return Redirect::action('MainController@admin');
     }
@@ -141,7 +142,7 @@ class MainController extends \BaseController
     {
 
         $new_book_detail = $this->book->edit_or_add_book_details_repo();
-        echo "<script>alert('Your Changes Have Been applied')</script>";
+        // echo "<script>alert('Your Changes Have Been applied')</script>";
         return Redirect::action('MainController@admin');
     }
     public function addBooks()
