@@ -16,7 +16,7 @@
 
 	<div id='reminder'>
 	@if(isset($logged_user))
-		Latest Date of Book Submisssion:
+		Latest Date of Book Submission:
 	@else
 		No one
 	@endif
@@ -32,7 +32,7 @@
 	<u>	{{ link_to('/all_books',"All Books")  }}<p></u>
 		@foreach($AllBooks as $SingleList)
 			{{link_to('single_book/'.$SingleList->id,$SingleList->BookName )}}<p>
-			
+
 		@endforeach
 	</div>
 	<div id='latest_books'>
@@ -51,5 +51,5 @@
 	@endif
 	</div>
 	<br><br><p>
-	
+
 @stop
