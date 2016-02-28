@@ -13,10 +13,5 @@
 		Grade:{{Form::text('new_grade',$single_book_detail['grade'] )}}<p>
 		{{ Form::submit('Change!')}}
 	@endforeach
-	
+
 @stop
-
-
-		<!-- <?php echo Form::open(array(null, null, 'onsubmit' => 'demo_js(this); return false;')); ?>
-    <?php echo Form::submit('Search', null, array('id'=>'searchbtn', 'class'=>'button radius right')); ?>
-<?php echo Form::close(); ?> -->

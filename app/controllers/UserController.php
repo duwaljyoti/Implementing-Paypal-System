@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use Illuminate\Http\Request;
 
@@ -16,7 +16,9 @@ class UserController extends \BaseController
     }
     public function Login()
     {
+
         return View::make('login');
+
     }
     public function AdminLogin()
     {
@@ -37,7 +39,7 @@ class UserController extends \BaseController
         if ($user_validation->passes()) {
             $data = $this->request->all();
             // $user_check_auth=Auth::attempt(['username'=>$data['username'],'password'=>$data['password']]);
-            $user_num = $this->user->check_user_auth($data);
+            $user_num = $this->user->checkUserAuth($data);
             echo $num_users = count($user_num);
             if ($num_users == 0) {
                 return View::make('login', ['login_failed_message' => "<P>Please Login with authentic values"]);
@@ -59,7 +61,7 @@ class UserController extends \BaseController
     // signUpNewUser
     public function signUpUser()
     {
-        $sign_up_user_validation = Validator::make(Input::all(), ['name' => 'required', 'username' => 'required|unique:users', 'password' => 'required', 'grade' => 'required', 'faculty' => 'required']);
+        $sign_up_user_validation = Validator::make(Input::all(), ['name' => 'required', 'email' => 'required', 'username' => 'required|unique:users', 'password' => 'required', 'grade' => 'required', 'faculty' => 'required']);
         if ($sign_up_user_validation->passes()) {
             $sign_up_data = $this->request->all();
             $this->sign_up_user($sign_up_data);
@@ -71,4 +73,36 @@ class UserController extends \BaseController
 
     }
 
+    public function resetPassword()
+    {
+        $emailPassValidation = Validator::make(Input::all(), ['newPassword' => 'required|min:6', 'prevCode' => 'required']);
+        if ($emailPassValidation->passes()) {
+            $data = $this->request->all();
+            $dataNewPass = $data['newPassword'];
+            $dataId = $data['id'];
+            $dataCode = $data['prevCode'];
+
+            $resetResp = $this->user->checkUserToReset($dataNewPass, $dataId, $dataCode);
+            var_dump($dataNewPass);
+            var_dump($dataId);
+            var_dump($dataCode);
+            // dd("here");
+            if ($resetResp == 0) {
+                echo "no id found";
+                Session::flash('wrongcode', "Please input  your code correctly<p>");
+                return Redirect::back()->withInput();
+            } else {
+                echo $resetResp . "found";
+                Session::flash('passwordReseted', 'Please Login with your updated Credentials<p>');
+                // return Redirect::action('UserController@login');
+                // return Redirect::route('/login');
+                // $this->Login();
+                return Redirect::action('UserController@Login');
+            }
+        } else {
+            return Redirect::back()->withInput()->withErrors($emailPassErrorMessages = $emailPassValidation->messages());
+        }
+
+        // return Redirect::action('UserController@login', array('passwordChangeMessage' => 'Password Changed'));
+    }
 }

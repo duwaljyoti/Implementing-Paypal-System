@@ -32,17 +32,17 @@ class MainController extends \BaseController
     public function home()
     {
         $logged_user = Session::get('username');
-        foreach ($this->book->disp_all_books() as $dates) {
-            var_dump($dates['to_return_date'] < '2016-06-26 00:00:00');
+        foreach ($this->book->dispAllBooks() as $dates) {
+            $dates['to_return_date'] < '2016-06-26 00:00:00';
             $demo_date = new DateTime($dates['to_return_date']);
             echo $dates['to_return_date'] . "<P>";
         }
-        $data = array('BookCatList' => $this->book_categories->disp_all_categories(), 'LatestBook' => $this->book->disp_all_books(), 'AllBooks' => $this->book->disp_all_books(), 'logged_user' => $logged_user);
+        $data = array('BookCatList' => $this->book_categories->dispAllCategories(), 'LatestBook' => $this->book->dispAllBooks(), 'AllBooks' => $this->book->DispAllBooks(), 'logged_user' => $logged_user);
         return View::make('home')->with($data);
     }
     public function admin()
     {
-        $data = array('BookCatList' => $this->book_categories->disp_all_categories(), 'LatestBook' => $this->book->disp_all_books(), 'AllBooks' => $this->book->disp_all_books());
+        $data = array('BookCatList' => $this->book_categories->dispAllCategories(), 'LatestBook' => $this->book->dispAllBooks(), 'AllBooks' => $this->book->dispAllBooks());
         return View::make('admin_home')->with($data);
     }
 
@@ -69,7 +69,7 @@ class MainController extends \BaseController
     public function dispSingleBook($book_id)
     {
         $logged_user = Session::get('username');
-        $book_complete_detail = $this->book->display_single_book($book_id);
+        $book_complete_detail = $this->book->displaySingleBook($book_id);
         $matchThese = ['book_id' => $book_id, 'student_name' => $logged_user];
         $user_check = BooksIssued::where($matchThese)->get();
         $book_issued = count($user_check);
@@ -103,7 +103,7 @@ class MainController extends \BaseController
 
     public function search()
     {
-        $search_book_result = $this->book->search_book();
+        $search_book_result = $this->book->searchBook();
         $search_data = array();
         $search_data['search_item'] = Input::get('search_item');
         $search_data['search_book_result'] = $search_book_result;
@@ -115,20 +115,20 @@ class MainController extends \BaseController
     public function browseWithCat($cat_name)
     {
         $book = array();
-        $book_result = $this->book_categories->browse_with_cat_repo($cat_name);
+        $book_result = $this->book_categories->browseWithCatRepo($cat_name);
         $book['result'] = $book_result->toArray();
         $book['cat_name'] = $cat_name;
-        return View::make('browse_with_cat', ['book' => $book]);
+        return View::make('browse_with_cat', ['book' => $book, 'bookNumbers' => count($book_result)]);
     }
     public function allBooks()
     {
-        $all_books = $this->book->disp_all_books();
+        $all_books = $this->book->dispAllBooks();
         return View::make('all_books', ['all_books_data' => $all_books]);
-        // return View::make('all_books',['all_books_data'=>$this->book->disp_all_books()]);
+        // return View::make('all_books',['all_books_data'=>$this->book->dispAllBooks()]);
     }
     public function adminAddBooks()
     {
-        $all_avail_cat = $this->book_categories->disp_all_categories();
+        $all_avail_cat = $this->book_categories->dispAllCategories();
         $i = 0;
         $category_all = array();
         foreach ($all_avail_cat as $category) {

@@ -9,8 +9,13 @@
 		{{Form::open(['url'=>'final_sign_up'])}}
 			{{ Form::label('name', 'Name')}}: &nbsp
 			 {{Form::text('name')}} <p>{{ $errors->first('name')}}<p>
+
+			 {{ Form::label('Email', 'Email')}}: &nbsp
+			 {{Form::text('email')}}<p>{{ $errors->first('email')}}<p>
+
 			 {{ Form::label('username', 'Username')}}: &nbsp
-			 {{Form::text('username')}}<p>{{ $errors->first('username')}}<p>
+			 {{Form::text('email')}} <p>{{ $errors->first('email')}}<p>
+
 			 {{ Form::label('password')}}: &nbsp
 			 {{Form::password('password')}}<p>{{ $errors->first('password')}}<p>
 

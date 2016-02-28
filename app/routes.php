@@ -41,7 +41,7 @@ Route::get('/add_new/{field} ', function ($field) {
     }
 });
 Route::get('/single_book/{single_book_id}', function ($single_book_id) {
-    return App::make('MainController')->disp_all_books($single_book_id);
+    return App::make('MainController')->dispSingleBook($single_book_id);
 });
 Route::post('/change', 'MainController@change');
 Route::post('/add', 'MainController@add');
@@ -49,14 +49,28 @@ Route::post('/login', 'UserController@store');
 Route::post('/issue_book', 'MainController@issue_book');
 Route::post('/search ', 'MainController@search');
 Route::get('/category/{cat_name} ', function ($cat_name) {
-    return App::make('MainController')->browse_with_cat($cat_name);
+    return App::make('MainController')->browseWithCat($cat_name);
 });
 Route::get('/all_books', 'MainController@all_books');
 Route::get('/add_books_admin', 'MainController@admin_add_books');
-Route::get('/sign_up', 'UserController@sign_up');
+Route::get('/sign_up', 'UserController@signUp');
 
 // Route::post('/sign_up_new_user', 'UserController@signUpNewUser');
-Route::get('/final_sign_up', 'UserController@final_sign_up_new_user');
+Route::get('/final_sign_up', 'UserController@signUpUserRepo');
 Route::post('/edit_book_details', 'MainController@edit_book_details');
 Route::post('/add_books', 'MainController@add_books');
 Route::get('/demo', 'Demo@demo');
+
+// Mail Part
+
+Route::get('/forgetPass', 'MailController@index');
+Route::post('/sendDemo', 'MailController@sendEmailDemo');
+// Route::get('/pulic/changePass/{userid}', function ($userId) {
+//     $users = User::where('id', '=', $userId)->get();
+//     return View::make('Mail/resetPass')->with("userInfo", $users);
+// });
+Route::get('/reset/{userId} ', function ($userId) {
+    $userInfo = User::where('id', '=', $userId)->get();
+    return View::make('Mail/resetPass', ['userId' => $userId, 'userDetails' => $userInfo]);
+});
+Route::post('/resetPassword', 'UserController@resetPassword');

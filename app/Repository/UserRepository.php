@@ -24,12 +24,38 @@ class UserRepository
      */
     public function signUpUserRepo($form_sign_up_data)
     {
-
         $user->name = $form_sign_up_data['name'];
         $user->username = $form_sign_up_data['username'];
         $user->password = Hash::make('password'); //Hash::make(Input::get('password'));
         $user->grade = $form_sign_up_data['grade'];
         $user->faculty = $form_sign_up_data['faculty'];
         $user->save();
+    }
+    public function checkUserExists($userEmail)
+    {
+        $userCheck = $this->user->where('email', '=', $userEmail)->get();
+        if (count($userCheck) == 0) {
+            return $userCheck;
+        } else {
+            return $userCheck;
+        }
+
+    }
+    public function pushCode($userCode, $userId)
+    {
+        $user = User::find($userId);
+        $user->code = $userCode; //Hash::make($userCode);
+        $user->save();
+    }
+    public function checkUserToReset($newPass, $userId, $dataCode)
+    {
+        $user = User::find($userId);
+        if ($dataCode == $user->code) {
+            $user->password = $newPass; //Hash::make($user->code);
+            $user->save();
+            return 1;
+
+        }
+        return 0;
     }
 }

@@ -5,9 +5,9 @@
 
 @section('content')
 {{link_to(URL::to('/'),"Home")}}
-	<p>Category Name: {{$book['cat_name']}}
-	@foreach($book['result'] as $book_detail=>$value)			
+	<h2>Category Name: {{$book['cat_name']}}</h2>
+	<p><i>Books Found in {{$book['cat_name']}} Category </i>:{{$bookNumbers}}
+	@foreach($book['result'] as $book_detail=>$value)
 			<p>{{link_to('single_book/'.$value['id'],$value['BookName'] )}}
-
 	@endforeach
 @stop

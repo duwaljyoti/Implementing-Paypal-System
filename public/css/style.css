@@ -51,11 +51,11 @@
 	#ad_bottom_menus{
 		padding-top: 10px;
 		clear:left;
-		margin-top:285px;
+		/*margin-top:285px;*/
 	}
 	#reminder{
 		border: 1px solid black;
-		width:556px;
+		width:546px;
 		margin-left: 120px;
-		padding-top:10px;	
+		padding:10px;	
 	}
