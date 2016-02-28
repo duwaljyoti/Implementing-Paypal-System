@@ -31,6 +31,10 @@ class UserRepository
         $user->faculty = $form_sign_up_data['faculty'];
         $user->save();
     }
+    /**
+     * @param $userEmail
+     * @return mixed
+     */
     public function checkUserExists($userEmail)
     {
         $userCheck = $this->user->where('email', '=', $userEmail)->get();
@@ -41,12 +45,22 @@ class UserRepository
         }
 
     }
+    /**
+     * @param $userCode
+     * @param $userId
+     */
     public function pushCode($userCode, $userId)
     {
         $user = User::find($userId);
         $user->code = $userCode; //Hash::make($userCode);
         $user->save();
     }
+    /**
+     * @param $newPass
+     * @param $userId
+     * @param $dataCode
+     * @return int
+     */
     public function checkUserToReset($newPass, $userId, $dataCode)
     {
         $user = User::find($userId);

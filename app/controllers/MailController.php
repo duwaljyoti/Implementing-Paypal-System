@@ -2,6 +2,9 @@
 
 class MailController extends \BaseController
 {
+    /**
+     * @param UserRepository $user
+     */
     public function __construct(UserRepository $user)
     {
         $this->user = $user;
