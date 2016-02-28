@@ -16,7 +16,7 @@
 
 	<div id='reminder'>
 	@if(isset($logged_user))
-		Latest Date of Book Submission:
+		Nearest Date of Book Submission:{{$nearDate}}
 	@else
 		<div id='error_messages'>Please Login</div>
 	@endif

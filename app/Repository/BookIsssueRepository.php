@@ -20,8 +20,8 @@ class BookIssueRepository
      */
     public function getBooksIssuedByUser($user)
     {
-        $books_issued_data = $this->book_issued->where('username', '=', $user)->get();
-        return $book_issued->toArray();
+        $books_issued_data = $this->book_issued->where('student_name', '=', $user)->get();
+        return $books_issued_data->toArray();
     }
     /**
      * @return int
@@ -38,4 +38,13 @@ class BookIssueRepository
         return 1;
     }
 
+    public function checkIfBookIssued($user, $bookId)
+    {
+        $matchThese = ['book_id' => $bookId, 'student_name' => $user];
+        return $this->book_issued->where($matchThese)->get();
+    }
+    public function checkNumOfBooksOfStudent($user)
+    {
+        return $this->book_issued->where('student_name', '=', $user)->get();
+    }
 }

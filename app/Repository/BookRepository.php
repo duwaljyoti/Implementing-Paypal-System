@@ -53,5 +53,9 @@ class BookRepository
         $new_book_detail->save();
         return 0;
     }
+    public function dispSingleBookDetails($bookId)
+    {
+        return $this->book->find($bookId);
+    }
 
 }

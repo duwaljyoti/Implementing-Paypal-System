@@ -32,12 +32,25 @@ class MainController extends \BaseController
     public function home()
     {
         $logged_user = Session::get('username');
-        foreach ($this->book->dispAllBooks() as $dates) {
-            $dates['to_return_date'] < '2016-06-26 00:00:00';
-            $demo_date = new DateTime($dates['to_return_date']);
-            echo $dates['to_return_date'] . "<P>";
+        $issuedBooksDetails = $this->book_issued->getBooksIssuedByUser($logged_user);
+        // var_dump($issuedBooksDetails);
+        $numOfDates = count($issuedBooksDetails);
+        $datesArray = array();
+        $i = 0;
+        foreach ($issuedBooksDetails as $dates) {
+            $datesArray[$i] = $dates['to_return_date'];
+            $i++;
         }
-        $data = array('BookCatList' => $this->book_categories->dispAllCategories(), 'LatestBook' => $this->book->dispAllBooks(), 'AllBooks' => $this->book->DispAllBooks(), 'logged_user' => $logged_user);
+
+        for ($i = 0; $i <= $numOfDates - 2; $i++) {
+            if ($datesArray[$i] < $datesArray[$i + 1]) {
+                $nearDate = $datesArray[$i];
+            } else {
+                $nearDate = $datesArray[$i + 1];
+            }
+
+        }
+        $data = array('BookCatList' => $this->book_categories->dispAllCategories(), 'LatestBook' => $this->book->dispAllBooks(), 'AllBooks' => $this->book->DispAllBooks(), 'logged_user' => $logged_user, 'nearDate' => $nearDate);
         return View::make('home')->with($data);
     }
     public function admin()
@@ -70,11 +83,10 @@ class MainController extends \BaseController
     {
         $logged_user = Session::get('username');
         $book_complete_detail = $this->book->displaySingleBook($book_id);
-        $matchThese = ['book_id' => $book_id, 'student_name' => $logged_user];
-        $user_check = BooksIssued::where($matchThese)->get();
+        $user_check = $this->book_issued->checkIfBookIssued($logged_user, $book_id);
         $book_issued = count($user_check);
         $data_to_be_sent = array();
-        $user_check = BooksIssued::where('student_name', '=', $logged_user)->get();
+        $user_check = $this->book_issued->checkNumOfBooksOfStudent($logged_user);
         $issued_date_1 = $user_check->toArray();
         $issued_date = $return_date = date('y m d');
         foreach ($issued_date_1 as $key => $value) {
@@ -85,20 +97,17 @@ class MainController extends \BaseController
         $data_to_be_sent['return_date'] = $return_date;
         $data_to_be_sent['total_book_issued'] = count($user_check);
         $data_to_be_sent['user_check'] = $book_issued;
-
-        $data_to_be_sent['single_book_detail'] = Books::find($book_id);
+        $data_to_be_sent['single_book_detail'] = $this->book->dispSingleBookDetails($book_id);
         return View::make('disp_single_book', ['complete_data' => $data_to_be_sent]);
     }
     public function issueBook()
     {
-
         $book_issue_test = $this->book_issued->issue_books_repo();
         if ($book_issue_test == 1) {
             return Redirect::back();
         } else {
             echo "<p>Some Error ocurred while issuing book";
         }
-
     }
 
     public function search()
