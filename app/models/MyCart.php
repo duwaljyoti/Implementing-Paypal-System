@@ -5,7 +5,7 @@ use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\UserTrait;
 
-class Books extends Eloquent implements UserInterface, RemindableInterface
+class MyCart extends Eloquent implements UserInterface, RemindableInterface
 {
 
     use UserTrait, RemindableTrait;
@@ -16,7 +16,7 @@ class Books extends Eloquent implements UserInterface, RemindableInterface
      * @var string
      */
     public $timestamps = false;
-    protected $table = 'books';
+    protected $table = 'mycart';
 
     /**
      * The attributes excluded from the model's JSON form.
