@@ -140,8 +140,11 @@ class PaypalController extends BaseController
         $payment_id = Session::get('paypal_payment_id');
         // clear the session payment Id
         Session::forget('paypal_payment_id');
-        if (empty(Input::get('PayerId')) || empty(Input::get('token'))) {
-            return "Openation Failed";
+        if (empty(Input::get('PayerID')) || empty(Input::get('token'))) {
+           echo "PayerId". var_dump(Input::get());
+           echo "PayerId".  var_dump(Input::get('PayerId'));
+           echo "token".  var_dump(Input::get('token'));
+            return "Openation Failed becaes of missing token or payerid dude";
         }
 
         $payment = Payment::get($payment_id, $this->_api_context);
@@ -150,16 +153,17 @@ class PaypalController extends BaseController
         // The payer_id is added to the request query parameters
         // when the user is redirected from paypal back to your site
         $execution = new PaymentExecution();
-        $execution = setPayeId(Input::get('PayerID'));
+        $execution-> setPayerId(Input::get('PayerID'));
         $result = $payment->execute($execution, $this->_api_context);
         if ($result->getState() == 'approved') {
             $latestCart = MyCart::find(Session::get('transactionID'));
             // dd($latestCart);
             $latestCart->status = "Paid";
             $latestCart->save();
-            return "Payment was Succesful..";
+            session::put('successMsg',"Payment was Succesful..");
+             return Redirect::action('ItemController@home');
         } else {
-            return "Operation Failed";
+            return "Operation Failed.unknown";
         }
     }
 

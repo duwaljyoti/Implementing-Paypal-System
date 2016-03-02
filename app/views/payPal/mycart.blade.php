@@ -6,12 +6,12 @@
 {{Form::open(['url'=>'pay'])}}
 @foreach($items as $singleItem)
 	{{Form::hidden('id', $singleItem->id )}}
-	Product Name:{{$singleItem->name}} {{Form::hidden('name', $singleItem->name )}}<p>
-	Product Single Price:{{$singleItem->price}} {{Form::hidden('price', $singleItem->price )}}<p>
-	Product Nums: {{$singleItem->quantity}} {{Form::hidden('quantity', $singleItem->quantity )}}<p>
+	Product Name:{{$singleItem->name}} {{Form::hidden('name', $singleItem->name )}}<br>
+	Product Single Price:{{$singleItem->price}} {{Form::hidden('price', $singleItem->price )}}<br>
+	Product Nums: {{$singleItem->quantity}} {{Form::hidden('quantity', $singleItem->quantity )}}<br>
 	<?php  $totalPrice= $singleItem->price * $singleItem->quantity;?>
-	Status:{{$singleItem->status}} <p>
-	Total Price:{{$totalPrice}} {{Form::hidden('name', $totalPrice )}}<p>
+	Status:{{$singleItem->status}} <br>
+	Total Price:{{$totalPrice}} {{Form::hidden('name', $totalPrice )}}<br>
 	{{Form::submit('pay')}}<p>
 @endforeach
 
